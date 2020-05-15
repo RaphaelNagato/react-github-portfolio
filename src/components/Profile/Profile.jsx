@@ -1,6 +1,16 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import Link from "../Link/Link";
-import "./Profile.css";
+import List from "../List/List";
+
+const ProfileWrapper = styled.div`
+  width: 50%;
+  margin: 10px auto;
+`;
+
+const Avatar = styled.img`
+  width: 150px;
+`;
 
 class Profile extends Component {
   state = {
@@ -25,32 +35,22 @@ class Profile extends Component {
     if (loading) {
       return <div>Loading...</div>;
     }
+    const items = [
+      {
+        label: "My Github:",
+        value: <Link url={data.html_url} title="Github URL" />,
+      },
+      { label: "repos_url:", value: data.repos_url },
+      { label: "name:", value: data.name },
+      { label: "location:", value: data.location },
+      { label: "email:", value: "raphbunor27@gmail.com" },
+      { label: "bio:", value: data.bio },
+    ];
     return (
-      <div className="Profile-container">
-        <img className="Profile-avatar" src={data.avatar_url} alt={data.name} />
-        <ul>
-          <li>
-            <strong>My github:</strong>
-            <Link url={data.html_url} title="Github URL" />
-          </li>
-          <li>
-            <strong>repos_url:</strong> {data.repos_url}
-          </li>
-          <li>
-            <strong>name:</strong> {data.name}
-          </li>
-          <li>
-            <strong>location:</strong>
-            {data.location}
-          </li>
-          <li>
-            <strong>email:</strong> raphbunor27@gmail.com
-          </li>
-          <li>
-            <strong>bio:</strong> {data.bio}
-          </li>
-        </ul>
-      </div>
+      <ProfileWrapper className="Profile-container">
+        <Avatar src={data.avatar_url} alt={data.name} />
+        <List items={items} />
+      </ProfileWrapper>
     );
   }
 }
